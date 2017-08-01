@@ -11,7 +11,7 @@ using GSearch;
 
 VB.NET:
 ```vb
-import GSearch
+Import GSearch
 ```
 
 ## Usage
