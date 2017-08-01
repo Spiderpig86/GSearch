@@ -1,0 +1,5 @@
+C:\Users\Stan\Desktop\ICanCSharp\GSearch\GSearch\bin\Debug\GSearch.dll
+C:\Users\Stan\Desktop\ICanCSharp\GSearch\GSearch\bin\Debug\GSearch.pdb
+C:\Users\Stan\Desktop\ICanCSharp\GSearch\GSearch\obj\Debug\GSearch.csprojResolveAssemblyReference.cache
+C:\Users\Stan\Desktop\ICanCSharp\GSearch\GSearch\obj\Debug\GSearch.dll
+C:\Users\Stan\Desktop\ICanCSharp\GSearch\GSearch\obj\Debug\GSearch.pdb
