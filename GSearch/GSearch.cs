@@ -16,14 +16,14 @@ namespace GSearch
     {
         const string GOOGLE_XML_URL = "http://google.com/complete/search?output=toolbar&q="; // Head of the query URL
 
-        public static string[] GetResults(string query)
+        /// <summary>
+        ///     Returns an array of results as string from search.
+        /// </summary>
+        /// <param name="query">The search query for Google.</param>
+        /// <returns></returns>
+        public static string[] GetResultsAsArray(string query)
         {
-            // Set up variables and XML request
-            string searchData = "";
-            using (WebClient client = new WebClient())
-            {
-                searchData = client.DownloadString(GOOGLE_XML_URL + query); // Get the XML results
-            }
+            string searchData = fetchData(query);
 
             // Parse through the suggestions
             if (searchData != null)
@@ -47,6 +47,28 @@ namespace GSearch
             }
 
             return new String[0]; // Else return an empty string array
+        }
+
+        /// <summary>
+        ///     Returns the raw XML response of the search results.
+        /// </summary>
+        /// <param name="query">The search term entere by the user.</param>
+        /// <returns></returns>
+        public static string GetResultsAsString(string query)
+        {
+            return fetchData(query);
+        }
+
+        // Helper Methods
+        private static string fetchData(string query)
+        {
+            // Set up variables and XML request
+            string searchData = "";
+            using (WebClient client = new WebClient())
+            {
+                searchData = client.DownloadString(GOOGLE_XML_URL + query); // Get the XML results
+            }
+            return searchData;
         }
     }
 }

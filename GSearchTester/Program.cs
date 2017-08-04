@@ -18,13 +18,15 @@ namespace GSearchTester
         {
             Console.WriteLine("Enter a search term: ");
             String query = Console.ReadLine();
-            string[] results = GSearch.GSearch.GetResults(query); // Get results
+            string[] results = GSearch.GSearch.GetResultsAsArray(query); // Get results
             Console.WriteLine("Autocomplete Suggestions: ");
             foreach (string s in results)
             {
                 Console.WriteLine(s);
             }
             Console.WriteLine("");
+            Console.WriteLine("Raw XML:");
+            Console.WriteLine(GSearch.GSearch.GetResultsAsString(query));
 
             ProcessInput();
         }

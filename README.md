@@ -1,5 +1,5 @@
 # GSearch
-A lightning fast portable library for fetching Google autocomplete suggestions with a 6kb footprint.
+A lightning fast, portable library for fetching Google autocomplete suggestions at just 6kb.
 
 ## Setting Up
 After downloading the library, add it to the application's references.
@@ -18,12 +18,15 @@ Imports GSearch
 Declare an array to store the Google Search results.
 C#:
 ```csharp
-string[] suggestions = GSearch.GetResults(your_query);
+string[] suggestions = GSearch.GetResultsAsArray(your_query);
 ```
 VB.NET:
 ```vb
-Dim suggestions As String() = GSearch.GetResults(your_query)
+Dim suggestions As String() = GSearch.GetResultsAsArray(your_query)
 ```
+
+To get the raw XML, just call `GSearch.GetResultsAsString(your_query);`.
+
 ## Future Updates
 TBA
 
