@@ -14,7 +14,6 @@ namespace GSearch
     /// </summary>
     public class GSearch
     {
-        const string GOOGLE_XML_URL = "http://google.com/complete/search?output=toolbar&q="; // Head of the query URL
 
         /// <summary>
         ///     Returns an array of results as string from search.
@@ -66,7 +65,7 @@ namespace GSearch
             string searchData = "";
             using (WebClient client = new WebClient())
             {
-                searchData = client.DownloadString(GOOGLE_XML_URL + query); // Get the XML results
+                searchData = client.DownloadString(Constants.GOOGLE_XML_URL + query); // Get the XML results
             }
             return searchData;
         }
