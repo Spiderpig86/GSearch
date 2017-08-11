@@ -14,6 +14,9 @@ namespace GSearch
     /// </summary>
     public class GSearch
     {
+        
+        // Vars
+        private static String locale = Constants.Languages.English; // Set current search locale
 
         /// <summary>
         ///     Returns an array of results as string from search.
@@ -63,11 +66,25 @@ namespace GSearch
         {
             // Set up variables and XML request
             string searchData = "";
-            using (WebClient client = new WebClient())
+            using (WebClient client = new WebClient() { Encoding = Encoding.UTF8 })
             {
-                searchData = client.DownloadString(Constants.GOOGLE_XML_URL + query); // Get the XML results
+                //client.Encoding = Encoding.UTF8;
+                //searchData = client.DownloadString(String.Format(Constants.GOOGLE_XML_URL, query, locale)); // Get the XML results
+                client.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
+                byte[] stream = client.DownloadData(String.Format(Constants.GOOGLE_XML_URL, query, locale)); // Get the XML results
+                searchData = Encoding.UTF8.GetString(stream); // Convert to Unicode
             }
             return searchData;
+        }
+
+        public static String getLocale()
+        {
+            return locale;
+        }
+
+        public static void setLocale(String lang)
+        {
+            locale = lang;
         }
     }
 }

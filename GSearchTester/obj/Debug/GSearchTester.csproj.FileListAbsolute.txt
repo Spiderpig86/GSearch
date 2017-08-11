@@ -11,3 +11,4 @@ C:\Users\Stan\Desktop\VB.NET Projects\GSearch\GSearchTester\obj\Debug\GSearchTes
 C:\Users\Stan\Desktop\VB.NET Projects\GSearch\GSearchTester\bin\Debug\GSearchTester.exe
 C:\Users\Stan\Desktop\VB.NET Projects\GSearch\GSearchTester\bin\Debug\GSearchTester.pdb
 C:\Users\Stan\Desktop\VB.NET Projects\GSearch\GSearchTester\bin\Debug\GSearch.dll
+C:\Users\Stan\Desktop\VB.NET Projects\GSearch\GSearchTester\bin\Debug\GSearch.pdb
