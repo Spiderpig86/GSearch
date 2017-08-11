@@ -25,7 +25,7 @@ namespace GSearch
         /// <returns></returns>
         public static string[] GetResultsAsArray(string query)
         {
-            string searchData = fetchData(query);
+            string searchData = FetchData(query);
 
             // Parse through the suggestions
             if (searchData != null)
@@ -58,33 +58,53 @@ namespace GSearch
         /// <returns></returns>
         public static string GetResultsAsString(string query)
         {
-            return fetchData(query);
+            return FetchData(query);
         }
 
         // Helper Methods
-        private static string fetchData(string query)
+        private static string FetchData(string query)
         {
             // Set up variables and XML request
             string searchData = "";
-            using (WebClient client = new WebClient() { Encoding = Encoding.UTF8 })
+            using (WebClient client = new WebClient())
             {
-                //client.Encoding = Encoding.UTF8;
-                //searchData = client.DownloadString(String.Format(Constants.GOOGLE_XML_URL, query, locale)); // Get the XML results
-                client.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
-                byte[] stream = client.DownloadData(String.Format(Constants.GOOGLE_XML_URL, query, locale)); // Get the XML results
-                searchData = Encoding.UTF8.GetString(stream); // Convert to Unicode
+                string searchURL = String.Format(Constants.GOOGLE_XML_URL, query, locale);
+                String charset = GetEncoding(client, searchURL); // Get the charset of the search results first so characters are printed correctly
+                client.Encoding = Encoding.GetEncoding(charset); // Convert charset string to Encoding
+                searchData = client.DownloadString(searchURL);
             }
             return searchData;
         }
 
-        public static String getLocale()
+        /// <summary>
+        ///     Get the current locale of the client
+        /// </summary>
+        /// <returns></returns>
+        public static String GetLocale()
         {
             return locale;
         }
 
-        public static void setLocale(String lang)
+        /// <summary>
+        ///     Set the locale of the client
+        /// </summary>
+        /// <param name="lang">Set the locale from Constants.Language.* </param>
+        public static void SetLocale(String lang)
         {
             locale = lang;
+        }
+
+        /// <summary>
+        ///     Get the encoding of the page.
+        /// </summary>
+        /// <param name="client">WebClient used to load up the page</param>
+        /// <param name="url">The page we want to load</param>
+        /// <returns>Charset of the page</returns>
+        public static string GetEncoding(WebClient client, String url)
+        {
+            client.DownloadString(url);
+            var contentType = client.ResponseHeaders["Content-Type"];
+            return System.Text.RegularExpressions.Regex.Match(contentType, "charset=([^;]+)").Groups[1].Value;
         }
     }
 }
