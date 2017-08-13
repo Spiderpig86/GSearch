@@ -26,13 +26,16 @@ namespace GSearchTester
                 Console.WriteLine("Enter path to file with file name + .ext: ");
                 filePath = Console.ReadLine();
             }
+
+            // Set Locale
+            GSearch.GSearch.SetLocale(Constants.Languages.English);
+            Console.WriteLine(String.Format("Locale set to: {0} \n", GSearch.GSearch.GetLocale()));
             
             ProcessInput();
         }
 
         static void ProcessInput()
         {
-            GSearch.GSearch.SetLocale(Constants.Languages.English); // Set locale
             Console.WriteLine("Enter a search term:");
             String query = Console.ReadLine();
             string[] results = GSearch.GSearch.GetResultsAsArray(query); // Get results
@@ -49,12 +52,12 @@ namespace GSearchTester
                 }
                 catch (Exception e)
                 {
-
+                    Console.WriteLine(e.Message);
                 }
             }
             Console.WriteLine("");
             Console.WriteLine("Raw XML:");
-            Console.WriteLine(GSearch.GSearch.GetResultsAsString(query));
+            Console.WriteLine(GSearch.GSearch.GetResultsAsString(query) + "\n");
 
             ProcessInput();
         }

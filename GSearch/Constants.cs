@@ -10,7 +10,7 @@ namespace GSearch
         public const string GOOGLE_XML_URL = "http://google.com/complete/search?output=toolbar&q={0}&hl={1}"; // Head of the query URL
 
         // Languages
-        public class Languages
+        public struct Languages
         {
             public const String Afrikaans = "af";
             public const String Akan = "ak";

@@ -28,5 +28,7 @@ Dim suggestions As String() = GSearch.GetResultsAsArray(your_query)
 To get the raw XML, just call `GSearch.GetResultsAsString(your_query);`.
 
 ## Future Updates
-TBA
+* VB.Net sample
+* Option to change locales in tester application
+* Sample with UI
 
