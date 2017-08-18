@@ -10,6 +10,7 @@ namespace GSearchTester
     {
         private static bool printToFile = false;
         private static string filePath = "";
+        private static bool isAsync = false;
 
         static void Main(string[] args)
         {
@@ -25,6 +26,14 @@ namespace GSearchTester
                 printToFile = true;
                 Console.WriteLine("Enter path to file with file name + .ext: ");
                 filePath = Console.ReadLine();
+            }
+
+            // Ask to use async method
+            Console.WriteLine("Use asynchronous searching? (Y/N)");
+            String res = Console.ReadLine();
+            if (res.ToLower() == "y")
+            {
+                isAsync = true;
             }
 
             // Set Locale
@@ -58,7 +67,7 @@ namespace GSearchTester
         {
             Console.WriteLine("Enter a search term:");
             String query = Console.ReadLine();
-            string[] results = GSearch.GSearch.GetResultsAsArray(query); // Get results
+            string[] results = (isAsync) ? GSearch.GSearch.GetResultsAsArrayAsync(query).Result : GSearch.GSearch.GetResultsAsArray(query); // Get results
             Console.WriteLine("Autocomplete Suggestions: ");
             foreach (string s in results)
             {

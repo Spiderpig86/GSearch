@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -25,6 +27,10 @@ namespace GSearch
         /// <returns></returns>
         public static string[] GetResultsAsArray(string query)
         {
+            // Throw exception if empty
+            if (String.IsNullOrWhiteSpace(query))
+                throw new ArgumentException("Argment cannot be null or empty!", "GetResultsAsArray(query)");
+
             string searchData = FetchData(query);
 
             // Parse through the suggestions
@@ -65,7 +71,7 @@ namespace GSearch
         private static string FetchData(string query)
         {
             // Set up variables and XML request
-            string searchData = "";
+            string searchData = String.Empty;
             using (WebClient client = new WebClient())
             {
                 string searchURL = String.Format(Constants.GOOGLE_XML_URL, query, locale);
@@ -74,6 +80,28 @@ namespace GSearch
                 searchData = client.DownloadString(searchURL);
             }
             return searchData;
+        }
+
+        // ASYNC METHODS
+        public async static Task<String[]> GetResultsAsArrayAsync(string query)
+        {
+            if (String.IsNullOrWhiteSpace(query))
+                throw new ArgumentException("Argment cannot be null or empty!", "GetResultsAsArray(query)");
+
+            string searchData = String.Empty;
+
+            // Using HTTP Client to fetch instead since it supports async operations
+            using (HttpClient client = new HttpClient())
+            {
+                searchData = await client.GetStringAsync(String.Format(Constants.GOOGLE_XML_URL, query, locale));
+            }
+
+            // Create an XML document parser
+            XDocument xdoc = XDocument.Parse(searchData);
+            var suggestions = from suggestion in xdoc.Descendants("CompleteSuggestion")
+                              select suggestion.Element("suggestion").Attribute("data").Value; // Using LINQ to get all values
+
+            return suggestions.ToArray<String>(); // Return as string array
         }
 
         /// <summary>
