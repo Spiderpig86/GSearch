@@ -28,8 +28,28 @@ namespace GSearchTester
             }
 
             // Set Locale
-            GSearch.GSearch.SetLocale(Constants.Languages.English);
-            Console.WriteLine(String.Format("Locale set to: {0} \n", GSearch.GSearch.GetLocale()));
+            Console.WriteLine("Please specify a locale (e.g: 'en'):");
+            String langCode = Console.ReadLine();
+
+            // Set to English by default of empty
+            if (langCode.Length == 0)
+                GSearch.GSearch.SetLocale(Constants.Languages.English);
+            else
+            {
+                Type structType = typeof(GSearch.Constants.Languages); // First extract the struct from the constants class
+                System.Reflection.FieldInfo[] languages = structType.GetFields(); // Use reflection to get the different fields
+
+                foreach (var field in languages)
+                {
+                    if (field.GetValue(structType).ToString() == langCode) // Match up the fields to see if user entered encoding exists
+                    {
+                        GSearch.GSearch.SetLocale(field.GetValue(structType).ToString()); // Set the locale
+                        break;
+                    }
+                }
+            }
+
+            Console.WriteLine(String.Format("Locale set to: {0} \n", GSearch.GSearch.GetLocale())); // Locale will be set to 'en' by default as a safeguard to invalid inputs
             
             ProcessInput();
         }
