@@ -119,7 +119,19 @@ namespace GSearch
         /// <param name="lang">Set the locale from Constants.Language.* </param>
         public static void SetLocale(String lang)
         {
-            locale = lang;
+            Type structType = typeof(Constants.Languages); // First extract the struct from the constants class
+            System.Reflection.FieldInfo[] languages = structType.GetFields(); // Use reflection to get the different fields
+
+            foreach (var field in languages)
+            {
+                if (field.GetValue(structType).ToString() == lang) // Match up the fields to see if user entered encoding exists
+                {
+                    locale = field.GetValue(structType).ToString(); // Set the locale
+                    return;
+                }
+            }
+
+            // If not found, default locale is 'en'
         }
 
         /// <summary>
